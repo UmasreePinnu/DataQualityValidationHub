@@ -1,0 +1,44 @@
+{
+  "Synapse Dev": {
+    "type": "Synapse",
+    "server": "syn-dlr-eda-uat.sql.azuresynapse.net",
+    "database": "syndw",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "Synapse UAT": {
+    "type": "Synapse",
+    "server": "syn-dlr-eda-uat.sql.azuresynapse.net",
+    "database": "syndw",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "Synapse Prod": {
+    "type": "Synapse",
+    "server": "syn-dlr-eda-prd.sql.azuresynapse.net",
+    "database": "syndw",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "Fabric Prod": {
+    "type": "Fabric",
+    "server": "ia5nkri4colerfhprtjvhczygq-khbhxcs36tju5p5ojjb2jwslui.datawarehouse.fabric.microsoft.com",
+    "database": "LH_BRONZE",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "LH Source": {
+    "type": "Fabric",
+    "server": "ia5nkri4colerfhprtjvhczygq-oty5i2v7ae3ephlnvqeuxyw62i.datawarehouse.fabric.microsoft.com",
+    "database": "LH_SOURCE_DATA",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "Silver": {
+    "type": "Fabric",
+    "server": "ia5nkri4colerfhprtjvhczygq-khbhxcs36tju5p5ojjb2jwslui.datawarehouse.fabric.microsoft.com",
+    "database": "LH_SILVER",
+    "authentication": "ActiveDirectoryInteractive"
+  },
+  "Gold": {
+    "type": "Fabric",
+    "server": "ia5nkri4colerfhprtjvhczygq-khbhxcs36tju5p5ojjb2jwslui.datawarehouse.fabric.microsoft.com",
+    "database": "LH_GOLD",
+    "authentication": "ActiveDirectoryInteractive"
+  }
+}

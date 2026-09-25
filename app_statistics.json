@@ -1,0 +1,119 @@
+[
+  {
+    "timestamp": "2026-09-09 16:05:39",
+    "feature": "File Comparator",
+    "duration_sec": 94.4,
+    "details": {
+      "output_files_count": 2,
+      "per_table_timings": [
+        {
+          "table": "YARDI_ACCTTREE",
+          "duration_sec": 0.46
+        },
+        {
+          "table": "YARDI_ACCTTREEDETAIL",
+          "duration_sec": 93.94
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-11 12:25:04",
+    "feature": "File Generator",
+    "duration_sec": 71.64,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "YARDI_PROPBUT_BUILDINGSTATUS_Target",
+          "rows": 4537,
+          "columns": 15
+        },
+        {
+          "name": "YARDI_ROLE_Target",
+          "rows": 480,
+          "columns": 19
+        },
+        {
+          "name": "YARDI_TAXAUTHORITY_Target",
+          "rows": 74,
+          "columns": 18
+        },
+        {
+          "name": "YARDI_TRANS_INT_Target",
+          "rows": 32961,
+          "columns": 18
+        },
+        {
+          "name": "YARDI_WF_HEADER_Target",
+          "rows": 537,
+          "columns": 23
+        },
+        {
+          "name": "YARDI_WF_TRAN_HEADER_Target",
+          "rows": 15876,
+          "columns": 27
+        },
+        {
+          "name": "YARDI_WF_TRAN_STEP_Target",
+          "rows": 8819,
+          "columns": 47
+        },
+        {
+          "name": "YARDI_WF_TRAN_STEP_APPROVER_Target",
+          "rows": 8870,
+          "columns": 9
+        }
+      ],
+      "total_records": 72154
+    }
+  },
+  {
+    "timestamp": "2026-09-21 16:39:49",
+    "feature": "MID File Validator",
+    "duration_sec": 0.78,
+    "details": {
+      "source_file": "NA MID2 Export August Reporting_sep21 1.xlsx",
+      "target_file": "NA MID2 Export August Reporting_sep21_PBI.xlsx",
+      "source_rows": 206,
+      "target_rows": 90,
+      "mismatches": 67
+    }
+  },
+  {
+    "timestamp": "2026-09-21 16:43:55",
+    "feature": "MID File Validator",
+    "duration_sec": 0.48,
+    "details": {
+      "source_file": "NA MID2 Export August Reporting_sep21 1.xlsx",
+      "target_file": "NA MID2 Export August Reporting_sep21_PBI.xlsx",
+      "source_rows": 206,
+      "target_rows": 90,
+      "mismatches": 67
+    }
+  },
+  {
+    "timestamp": "2026-09-21 16:50:17",
+    "feature": "MID File Validator",
+    "duration_sec": 0.45,
+    "details": {
+      "source_file": "NA MID2 Export August Reporting_sep21 1.xlsx",
+      "target_file": "NA MID2 Export August Reporting_sep21_PBI1.xlsx",
+      "source_rows": 206,
+      "target_rows": 90,
+      "mismatches": 67
+    }
+  },
+  {
+    "timestamp": "2026-09-22 11:48:34",
+    "feature": "MID File Validator",
+    "duration_sec": 0.25,
+    "details": {
+      "source_file": "NA MID2 Export August Reporting_sep21 1.xlsx",
+      "target_file": "NA MID2 Export August Reporting_sep21_PBI1 1.xlsx",
+      "source_rows": 206,
+      "target_rows": 92,
+      "mismatches": 9
+    }
+  }
+]
