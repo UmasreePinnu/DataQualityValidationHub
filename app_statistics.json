@@ -115,5 +115,995 @@
       "target_rows": 92,
       "mismatches": 9
     }
+  },
+  {
+    "timestamp": "2026-09-28 13:20:57",
+    "feature": "File Comparator",
+    "duration_sec": 0.34,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.34
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 12:54:58",
+    "feature": "MID File Validator",
+    "duration_sec": 2.17,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 831,
+      "target_rows": 247,
+      "mismatches": 56
+    }
+  },
+  {
+    "timestamp": "2026-09-29 12:58:50",
+    "feature": "MID File Validator",
+    "duration_sec": 2.29,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 831,
+      "target_rows": 247,
+      "mismatches": 76
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:04:12",
+    "feature": "MID File Validator",
+    "duration_sec": 0.36,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 23
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:07:15",
+    "feature": "MID File Validator",
+    "duration_sec": 0.49,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 24
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:08:24",
+    "feature": "MID File Validator",
+    "duration_sec": 0.39,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 23
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:09:02",
+    "feature": "MID File Validator",
+    "duration_sec": 1.66,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 803,
+      "target_rows": 247,
+      "mismatches": 45
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:09:24",
+    "feature": "MID File Validator",
+    "duration_sec": 1.67,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 803,
+      "target_rows": 247,
+      "mismatches": 45
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:39:01",
+    "feature": "MID File Validator",
+    "duration_sec": 0.24,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 0
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:40:14",
+    "feature": "MID File Validator",
+    "duration_sec": 0.28,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 11
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:57:17",
+    "feature": "File Comparator",
+    "duration_sec": 1.54,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 1.52
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 13:59:02",
+    "feature": "File Comparator",
+    "duration_sec": 1.65,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 1.64
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:16:02",
+    "feature": "MID File Validator",
+    "duration_sec": 0.76,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 803,
+      "target_rows": 247,
+      "mismatches": 44
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:21:13",
+    "feature": "MID File Validator",
+    "duration_sec": 0.25,
+    "details": {
+      "source_file": "MID2 Competitor Data Review 1_Colour_Filter.xlsx",
+      "target_file": "ANdrwe_PBI.xlsx",
+      "source_rows": 28,
+      "target_rows": 247,
+      "mismatches": 24
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:31:35",
+    "feature": "File Generator",
+    "duration_sec": 342.85,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "SN_u_authorization_type_Target",
+          "rows": 11,
+          "columns": 18,
+          "duration_sec": 53.82
+        },
+        {
+          "name": "SN_core_country_Target",
+          "rows": 231,
+          "columns": 29,
+          "duration_sec": 1.2
+        },
+        {
+          "name": "SN_u_pl4_available_time_selector_Target",
+          "rows": 1440,
+          "columns": 11,
+          "duration_sec": 1.07
+        },
+        {
+          "name": "SN_u_m2m_nonloc_auths_groups_Target",
+          "rows": 1973,
+          "columns": 16,
+          "duration_sec": 2.08
+        },
+        {
+          "name": "SN_u_authorization_group_Target",
+          "rows": 4641,
+          "columns": 17,
+          "duration_sec": 1.21
+        },
+        {
+          "name": "SN_u_m2m_authorizatio_contacts_Target",
+          "rows": 27175,
+          "columns": 16,
+          "duration_sec": 3.75
+        },
+        {
+          "name": "SN_question_answer_Target",
+          "rows": 31036,
+          "columns": 16,
+          "duration_sec": 5.04
+        },
+        {
+          "name": "SN_x_ixhbv_iam_case_access_case_Target",
+          "rows": 31246,
+          "columns": 231,
+          "duration_sec": 45.51
+        }
+      ],
+      "total_records": 97753
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:43:00",
+    "feature": "File Generator",
+    "duration_sec": 212.21,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "SN_u_authorization_type_Source",
+          "rows": 11,
+          "columns": 15,
+          "duration_sec": 2.11
+        },
+        {
+          "name": "SN_core_country_Source",
+          "rows": 231,
+          "columns": 26,
+          "duration_sec": 2.01
+        },
+        {
+          "name": "SN_u_pl4_available_time_selector_Source",
+          "rows": 1440,
+          "columns": 8,
+          "duration_sec": 0.92
+        },
+        {
+          "name": "SN_u_m2m_nonloc_auths_groups_Source",
+          "rows": 2075,
+          "columns": 13,
+          "duration_sec": 0.68
+        },
+        {
+          "name": "SN_u_authorization_group_Source",
+          "rows": 4824,
+          "columns": 14,
+          "duration_sec": 1.31
+        },
+        {
+          "name": "SN_u_m2m_authorizatio_contacts_Source",
+          "rows": 39,
+          "columns": 13,
+          "duration_sec": 0.6
+        },
+        {
+          "name": "SN_question_answer_Source",
+          "rows": 31036,
+          "columns": 13,
+          "duration_sec": 3.2
+        },
+        {
+          "name": "SN_x_ixhbv_iam_case_access_case_Source",
+          "rows": 32264,
+          "columns": 228,
+          "duration_sec": 17.03
+        }
+      ],
+      "total_records": 71920
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:45:00",
+    "feature": "File Generator",
+    "duration_sec": 339.57,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "sn_u_m2m_nonloc_auths_contacts_Target",
+          "rows": 10000,
+          "columns": 15,
+          "duration_sec": 9.06
+        },
+        {
+          "name": "sn_customer_contact_Target",
+          "rows": 10000,
+          "columns": 141,
+          "duration_sec": 4.13
+        },
+        {
+          "name": "sn_u_ix_access_request_contact_Target",
+          "rows": 10000,
+          "columns": 18,
+          "duration_sec": 1.74
+        },
+        {
+          "name": "sn_sys_choice_Target",
+          "rows": 10000,
+          "columns": 24,
+          "duration_sec": 1.93
+        },
+        {
+          "name": "sn_vLocationSplit_Target",
+          "rows": 10000,
+          "columns": 8,
+          "duration_sec": 1.4
+        },
+        {
+          "name": "sn_customerservice_maintenance_Target",
+          "rows": 10000,
+          "columns": 144,
+          "duration_sec": 197.26
+        },
+        {
+          "name": "sn_task_Target",
+          "rows": 10000,
+          "columns": 73,
+          "duration_sec": 12.6
+        },
+        {
+          "name": "sn_cmdb_rel_ci_Target",
+          "rows": 10000,
+          "columns": 21,
+          "duration_sec": 6.96
+        }
+      ],
+      "total_records": 80000
+    }
+  },
+  {
+    "timestamp": "2026-09-29 14:50:59",
+    "feature": "File Generator",
+    "duration_sec": 158.24,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "sn_u_m2m_nonloc_auths_contacts_Source",
+          "rows": 10000,
+          "columns": 12,
+          "duration_sec": 7.21
+        },
+        {
+          "name": "sn_customer_contact_Source",
+          "rows": 10000,
+          "columns": 138,
+          "duration_sec": 7.64
+        },
+        {
+          "name": "sn_u_ix_access_request_contact_Source",
+          "rows": 10000,
+          "columns": 15,
+          "duration_sec": 5.84
+        },
+        {
+          "name": "sn_sys_choice_Source",
+          "rows": 10000,
+          "columns": 21,
+          "duration_sec": 4.55
+        },
+        {
+          "name": "sn_vLocationSplit_Source",
+          "rows": 10000,
+          "columns": 5,
+          "duration_sec": 2.3
+        },
+        {
+          "name": "sn_customerservice_maintenance_Source",
+          "rows": 10000,
+          "columns": 141,
+          "duration_sec": 15.89
+        },
+        {
+          "name": "sn_task_Source",
+          "rows": 10000,
+          "columns": 70,
+          "duration_sec": 10.28
+        },
+        {
+          "name": "sn_cmdb_rel_ci_Source",
+          "rows": 10000,
+          "columns": 18,
+          "duration_sec": 5.23
+        }
+      ],
+      "total_records": 80000
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:19:25",
+    "feature": "File Comparator",
+    "duration_sec": 38.36,
+    "details": {
+      "output_files_count": 3,
+      "per_table_timings": [
+        {
+          "table": "SN_u_authorization_type",
+          "duration_sec": 0.27
+        },
+        {
+          "table": "SN_u_m2m_authorizatio_contacts",
+          "duration_sec": 22.83
+        },
+        {
+          "table": "sn_u_ix_access_request_contact",
+          "duration_sec": 15.26
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:20:20",
+    "feature": "File Comparator",
+    "duration_sec": 142.11,
+    "details": {
+      "output_files_count": 3,
+      "per_table_timings": [
+        {
+          "table": "SN_question_answer",
+          "duration_sec": 77.71
+        },
+        {
+          "table": "SN_u_authorization_group",
+          "duration_sec": 6.84
+        },
+        {
+          "table": "sn_task",
+          "duration_sec": 57.55
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:24:34",
+    "feature": "File Comparator",
+    "duration_sec": 127.0,
+    "details": {
+      "output_files_count": 2,
+      "per_table_timings": [
+        {
+          "table": "SN_core_country",
+          "duration_sec": 0.84
+        },
+        {
+          "table": "sn_customerservice_maintenance",
+          "duration_sec": 126.16
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:25:04",
+    "feature": "File Comparator",
+    "duration_sec": 198.46,
+    "details": {
+      "output_files_count": 3,
+      "per_table_timings": [
+        {
+          "table": "SN_u_m2m_authorizatio_contacts",
+          "duration_sec": 168.96
+        },
+        {
+          "table": "SN_u_m2m_nonloc_auths_groups",
+          "duration_sec": 18.37
+        },
+        {
+          "table": "SN_u_pl4_available_time_selector",
+          "duration_sec": 11.09
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:37:32",
+    "feature": "File Generator",
+    "duration_sec": 148.38,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "sn_u_m2m_nonloc_auths_contacts_Source",
+          "rows": 10000,
+          "columns": 13,
+          "duration_sec": 9.33
+        },
+        {
+          "name": "sn_customer_contact_Source",
+          "rows": 10000,
+          "columns": 139,
+          "duration_sec": 4.08
+        },
+        {
+          "name": "sn_u_ix_access_request_contact_Source",
+          "rows": 10000,
+          "columns": 16,
+          "duration_sec": 2.58
+        },
+        {
+          "name": "sn_sys_choice_Source",
+          "rows": 10000,
+          "columns": 22,
+          "duration_sec": 2.97
+        },
+        {
+          "name": "sn_vLocationSplit_Source",
+          "rows": 10000,
+          "columns": 6,
+          "duration_sec": 1.8
+        },
+        {
+          "name": "sn_customerservice_maintenance_Source",
+          "rows": 10000,
+          "columns": 142,
+          "duration_sec": 11.63
+        },
+        {
+          "name": "sn_task_Source",
+          "rows": 10000,
+          "columns": 71,
+          "duration_sec": 7.75
+        },
+        {
+          "name": "sn_cmdb_rel_ci_Source",
+          "rows": 10000,
+          "columns": 19,
+          "duration_sec": 4.46
+        }
+      ],
+      "total_records": 80000
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:44:21",
+    "feature": "File Generator",
+    "duration_sec": 174.52,
+    "details": {
+      "files_count": 8,
+      "items": [
+        {
+          "name": "sn_u_m2m_nonloc_auths_contacts_Target",
+          "rows": 10000,
+          "columns": 16,
+          "duration_sec": 4.28
+        },
+        {
+          "name": "sn_customer_contact_Target",
+          "rows": 10000,
+          "columns": 142,
+          "duration_sec": 4.61
+        },
+        {
+          "name": "sn_u_ix_access_request_contact_Target",
+          "rows": 10000,
+          "columns": 19,
+          "duration_sec": 2.27
+        },
+        {
+          "name": "sn_sys_choice_Target",
+          "rows": 10000,
+          "columns": 25,
+          "duration_sec": 2.22
+        },
+        {
+          "name": "sn_vLocationSplit_Target",
+          "rows": 10000,
+          "columns": 9,
+          "duration_sec": 2.35
+        },
+        {
+          "name": "sn_customerservice_maintenance_Target",
+          "rows": 10000,
+          "columns": 145,
+          "duration_sec": 13.51
+        },
+        {
+          "name": "sn_task_Target",
+          "rows": 10000,
+          "columns": 74,
+          "duration_sec": 6.88
+        },
+        {
+          "name": "sn_cmdb_rel_ci_Target",
+          "rows": 10000,
+          "columns": 22,
+          "duration_sec": 4.26
+        }
+      ],
+      "total_records": 80000
+    }
+  },
+  {
+    "timestamp": "2026-09-29 15:54:03",
+    "feature": "File Comparator",
+    "duration_sec": 446.16,
+    "details": {
+      "output_files_count": 4,
+      "per_table_timings": [
+        {
+          "table": "SN_question_answer",
+          "duration_sec": 33.33
+        },
+        {
+          "table": "sn_cmdb_rel_ci",
+          "duration_sec": 14.26
+        },
+        {
+          "table": "sn_customer_contact",
+          "duration_sec": 322.34
+        },
+        {
+          "table": "sn_sys_choice",
+          "duration_sec": 76.22
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 16:10:18",
+    "feature": "File Comparator",
+    "duration_sec": 57.02,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_u_m2m_nonloc_auths_contacts",
+          "duration_sec": 57.0
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 16:11:36",
+    "feature": "File Comparator",
+    "duration_sec": 43.22,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_vLocationSplit",
+          "duration_sec": 43.21
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-29 16:19:05",
+    "feature": "File Comparator",
+    "duration_sec": 614.96,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "SN_x_ixhbv_iam_case_access_case",
+          "duration_sec": 614.95
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-30 17:38:02",
+    "feature": "File Comparator",
+    "duration_sec": 0.33,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.33
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-30 17:39:31",
+    "feature": "File Comparator",
+    "duration_sec": 0.3,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-09-30 17:55:21",
+    "feature": "File Generator",
+    "duration_sec": 78.53,
+    "details": {
+      "files_count": 4,
+      "items": [
+        {
+          "name": "sfdc_oktopost_user__c_Source",
+          "rows": 331,
+          "columns": 16,
+          "duration_sec": 56.73
+        },
+        {
+          "name": "sfdc_oktopost_campaign__c_Source",
+          "rows": 403,
+          "columns": 16,
+          "duration_sec": 3.46
+        },
+        {
+          "name": "sfdc_oktopost_social_activity__c_Source",
+          "rows": 10000,
+          "columns": 15,
+          "duration_sec": 4.94
+        },
+        {
+          "name": "sfdc_oktopost_social_post__c_Source",
+          "rows": 10000,
+          "columns": 14,
+          "duration_sec": 3.58
+        }
+      ],
+      "total_records": 20734
+    }
+  },
+  {
+    "timestamp": "2026-09-30 17:56:55",
+    "feature": "File Generator",
+    "duration_sec": 30.99,
+    "details": {
+      "files_count": 4,
+      "items": [
+        {
+          "name": "sfdc_oktopost_user__c_Target",
+          "rows": 331,
+          "columns": 17,
+          "duration_sec": 8.75
+        },
+        {
+          "name": "sfdc_oktopost_campaign__c_Target",
+          "rows": 403,
+          "columns": 18,
+          "duration_sec": 1.24
+        },
+        {
+          "name": "sfdc_oktopost_social_activity__c_Target",
+          "rows": 10000,
+          "columns": 17,
+          "duration_sec": 5.42
+        },
+        {
+          "name": "sfdc_oktopost_social_post__c_Target",
+          "rows": 10000,
+          "columns": 17,
+          "duration_sec": 5.26
+        }
+      ],
+      "total_records": 20734
+    }
+  },
+  {
+    "timestamp": "2026-09-30 17:58:05",
+    "feature": "File Comparator",
+    "duration_sec": 24.55,
+    "details": {
+      "output_files_count": 4,
+      "per_table_timings": [
+        {
+          "table": "sfdc_oktopost_campaign__c",
+          "duration_sec": 0.75
+        },
+        {
+          "table": "sfdc_oktopost_social_activity__c",
+          "duration_sec": 11.84
+        },
+        {
+          "table": "sfdc_oktopost_social_post__c",
+          "duration_sec": 11.4
+        },
+        {
+          "table": "sfdc_oktopost_user__c",
+          "duration_sec": 0.56
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 11:29:02",
+    "feature": "File Comparator",
+    "duration_sec": 0.69,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.69
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 11:30:38",
+    "feature": "File Comparator",
+    "duration_sec": 0.6,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.6
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 11:57:34",
+    "feature": "File Comparator",
+    "duration_sec": 1.11,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 1.11
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 11:59:58",
+    "feature": "File Comparator",
+    "duration_sec": 0.86,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "Column",
+          "duration_sec": 0.86
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 12:03:52",
+    "feature": "File Comparator",
+    "duration_sec": 114.84,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_customer_contact",
+          "duration_sec": 114.84
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 12:10:02",
+    "feature": "File Comparator",
+    "duration_sec": 102.02,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_customer_contact",
+          "duration_sec": 102.02
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 12:14:25",
+    "feature": "File Comparator",
+    "duration_sec": 104.86,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_customer_contact",
+          "duration_sec": 104.86
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-07 14:49:09",
+    "feature": "File Comparator",
+    "duration_sec": 219.75,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_customer_contact",
+          "duration_sec": 219.75
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-12 15:14:54",
+    "feature": "File Comparator",
+    "duration_sec": 23.01,
+    "details": {
+      "output_files_count": 1,
+      "per_table_timings": [
+        {
+          "table": "sn_cmdb_rel_ci",
+          "duration_sec": 23.0
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-10-14 16:06:37",
+    "feature": "MID File Validator",
+    "duration_sec": 20.43,
+    "details": {
+      "source_file": "EMEA_selfbuild_Market_site.xlsx",
+      "target_file": "EMEA_selfbuild_Market.xlsx",
+      "source_rows": 1516,
+      "target_rows": 1371,
+      "mismatches": 2403
+    }
+  },
+  {
+    "timestamp": "2026-10-14 16:12:26",
+    "feature": "MID File Validator",
+    "duration_sec": 15.31,
+    "details": {
+      "source_file": "EMEA_selfbuild_Market_site.xlsx",
+      "target_file": "EMEA_selfbuild_Market.xlsx",
+      "source_rows": 1516,
+      "target_rows": 1371,
+      "mismatches": 375
+    }
+  },
+  {
+    "timestamp": "2026-10-14 17:17:19",
+    "feature": "MID File Validator",
+    "duration_sec": 17.13,
+    "details": {
+      "source_file": "EMEA_selfbuild_Market_site.xlsx",
+      "target_file": "EMEA_selfbuild_Market.xlsx",
+      "source_rows": 1516,
+      "target_rows": 1371,
+      "mismatches": 317
+    }
+  },
+  {
+    "timestamp": "2026-10-14 17:17:42",
+    "feature": "MID File Validator",
+    "duration_sec": 16.45,
+    "details": {
+      "source_file": "EMEA_selfbuild_Market_site.xlsx",
+      "target_file": "EMEA_selfbuild_Market.xlsx",
+      "source_rows": 1516,
+      "target_rows": 1371,
+      "mismatches": 317
+    }
+  },
+  {
+    "timestamp": "2026-10-14 17:22:24",
+    "feature": "MID File Validator",
+    "duration_sec": 14.85,
+    "details": {
+      "source_file": "EMEA_selfbuild_Market_site.xlsx",
+      "target_file": "EMEA_selfbuild_Market.xlsx",
+      "source_rows": 1516,
+      "target_rows": 1371,
+      "mismatches": 258
+    }
   }
 ]

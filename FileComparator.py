@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from io import BytesIO
 import openpyxl
-from openpyxl.styles import PatternFill
+from openpyxl.styles import PatternFill, Font
 from metrics_tracker import log_event
 
 
@@ -52,6 +52,7 @@ def run():
     if st.button("▶ Run Comparison", type="primary"):
         t_all_start = time.perf_counter()
         yellow_fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+        bold_font = Font(bold=True)
         progress = st.progress(0, text="Comparing files…")
         results = {}
         per_table_timings = []
@@ -107,7 +108,7 @@ def run():
             df_all = pd.DataFrame()
             df_all[KEY] = merged[KEY]
 
-            diff_col_summary = []
+            detailed_diff_rows = []
 
             for col in [c for c in common_cols if c != KEY]:
                 sc, tc = col + "_SRC", col + "_TRG"
@@ -115,33 +116,70 @@ def run():
                 df_all[col] = np.where(mask, merged[sc] + " → " + merged[tc], merged[sc])
 
                 if mask.any():
-                    diff_col_summary.append({
-                        "COLUMN NAME WITH ISSUES": col,
-                        "TOTAL ROW RECORD MISMATCHES": mask.sum()
-                    })
+                    mismatched_sub = merged[mask]
+                    for _, row in mismatched_sub.iterrows():
+                        val_str = f"{row[sc]} → {row[tc]}"
+                        detailed_diff_rows.append({
+                            "Column Name": col,
+                            "Issue": val_str,
+                            "KEY Value": row[KEY],
+                        })
+
+            # Build detailed report dataframe with single representative row per Column Name
+            if detailed_diff_rows:
+                df_temp = pd.DataFrame(detailed_diff_rows)
+                counts = df_temp.groupby("Column Name").size().reset_index(name="Issue Count")
+                df_temp_unique = df_temp.drop_duplicates(subset=["Column Name"]).copy()
+                df_diff_cols_report = pd.merge(df_temp_unique, counts, on="Column Name", how="left")
+                df_diff_cols_report = df_diff_cols_report[
+                    ["Column Name", "Issue", "KEY Value", "Issue Count"]
+                ]
+            else:
+                df_diff_cols_report = pd.DataFrame(
+                    columns=["Column Name", "Issue", "KEY Value", "Issue Count"]
+                )
 
             row_has_issue_mask = df_all.apply(lambda r: any("→" in str(v) for v in r), axis=1)
             df_filtered = df_all[row_has_issue_mask].copy()
 
-            df_diff_cols_report = pd.DataFrame(diff_col_summary) if diff_col_summary else pd.DataFrame(
-                columns=["COLUMN NAME WITH ISSUES", "TOTAL ROW RECORD MISMATCHES"])
-
             output = BytesIO()
             with pd.ExcelWriter(output, engine="openpyxl") as writer:
+                # Sheet 1: Missing Columns
                 pd.DataFrame({"Missing in Target": src_only_cols}).to_excel(writer, sheet_name="Missing_Columns",
                                                                             index=False, startrow=1)
                 pd.DataFrame({"Missing in Source": trg_only_cols}).to_excel(writer, sheet_name="Missing_Columns",
                                                                             index=False,
                                                                             startrow=len(src_only_cols) + 5)
 
-                df_miss_trg.to_excel(writer, sheet_name="Missing_Records", index=False, startrow=1)
-                df_miss_src.to_excel(writer, sheet_name="Missing_Records", index=False, startrow=len(df_miss_trg) + 5)
-
-                df_all.to_excel(writer, sheet_name="All_Data", index=False)
-                df_diff_cols_report.to_excel(writer, sheet_name="Differences_Columns", index=False)
-                df_filtered.to_excel(writer, sheet_name="Filtered_Differences", index=False)
-
+                # Sheet 2: Missing Records
                 wb = writer.book
+                ws_miss = wb.create_sheet(title="Missing_Records")
+                ws_miss.append(["Missing in Target"])
+                ws_miss.cell(row=ws_miss.max_row, column=1).font = bold_font
+                ws_miss.append(list(df_miss_trg.columns))
+                for cell in ws_miss[ws_miss.max_row]:
+                    cell.font = bold_font
+                for row in df_miss_trg.values.tolist():
+                    ws_miss.append(row)
+
+                ws_miss.append([])
+                ws_miss.append([])
+                ws_miss.append(["Missing in Source"])
+                ws_miss.cell(row=ws_miss.max_row, column=1).font = bold_font
+                ws_miss.append(list(df_miss_src.columns))
+                for cell in ws_miss[ws_miss.max_row]:
+                    cell.font = bold_font
+                for row in df_miss_src.values.tolist():
+                    ws_miss.append(row)
+
+                # Sheet 3: All Data
+                df_all.to_excel(writer, sheet_name="All_Data", index=False)
+
+                # Sheet 4: Differences Columns
+                df_diff_cols_report.to_excel(writer, sheet_name="Differences_Columns", index=False)
+
+                # Sheet 5: Filtered Differences
+                df_filtered.to_excel(writer, sheet_name="Filtered_Differences", index=False)
 
                 def _apply_arrow_highlights(ws, df):
                     if df.empty:
@@ -155,6 +193,12 @@ def run():
                     _apply_arrow_highlights(wb["All_Data"], df_all)
                 if "Filtered_Differences" in wb.sheetnames:
                     _apply_arrow_highlights(wb["Filtered_Differences"], df_filtered)
+
+                # Highlight the "Issue" column cells in Differences_Columns sheet (Column B)
+                if "Differences_Columns" in wb.sheetnames and not df_diff_cols_report.empty:
+                    ws_diff = wb["Differences_Columns"]
+                    for r in range(2, ws_diff.max_row + 1):
+                        ws_diff.cell(row=r, column=2).fill = yellow_fill
 
             base_elapsed = round(time.perf_counter() - t_base_start, 2)
             per_table_timings.append({"table": base, "duration_sec": base_elapsed})
