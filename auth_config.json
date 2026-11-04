@@ -1,0 +1,9 @@
+{
+  "users": {
+    "admin": {"password": "admin123", "role": "admin"},
+    "demo": {"password": "demo123", "role": "user"},
+    "qa": {"password": "qa123", "role": "user"},
+    "analyst": {"password": "analyst123", "role": "user"},
+    "viewer": {"password": "viewer123", "role": "viewer"}
+  }
+}
