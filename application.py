@@ -10,6 +10,16 @@ st.set_page_config(page_title="DQ Validation Hub", page_icon="📊", layout="wid
 
 auth.require_auth()
 
+header_spacer, user_info, logout_column = st.columns([8, 2, 1.3])
+with user_info:
+    st.caption(
+        f"Signed in as **{st.session_state.get('username')}** · "
+        f"{st.session_state.get('role')}"
+    )
+with logout_column:
+    if st.button("Logout", use_container_width=True, key="logout"):
+        auth.logout()
+
 with st.sidebar:
     st.markdown('<div class="sidebar-logo"><span class="dot"></span>DQ Validation Hub</div>', unsafe_allow_html=True)
     nav_options = [
