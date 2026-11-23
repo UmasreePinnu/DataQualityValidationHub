@@ -8,6 +8,16 @@ from openpyxl.styles import PatternFill, Font
 from metrics_tracker import log_event
 
 
+def _clean_key_series(series: pd.Series) -> pd.Series:
+    """Normalizes key values consistently before duplicate checks and joins."""
+    return (
+        series.fillna("NULL")
+        .astype(str)
+        .str.replace(r"[\r\n]+", "", regex=True)
+        .str.strip()
+    )
+
+
 def run():
     st.title("📁 File Comparator")
     st.caption("Upload paired _Source.xlsx and _Target.xlsx files to compare differences")
@@ -62,23 +72,56 @@ def run():
             src_name = f"{base}_Source.xlsx"
             trg_name = f"{base}_Target.xlsx"
 
-            df1 = pd.read_excel(file_dict[src_name], dtype=str)
-            df2 = pd.read_excel(file_dict[trg_name], dtype=str)
+            try:
+                # Explicitly read the first sheet only (sheet_name=0)
+                df1 = pd.read_excel(file_dict[src_name], sheet_name=0, dtype=str)
+                df2 = pd.read_excel(file_dict[trg_name], sheet_name=0, dtype=str)
+            except Exception:
+                st.error(f"❌ Error reading files for {base}: Ensure they are valid Excel files.", icon="🚨")
+                st.stop()
 
-            df1.columns = df1.columns.str.upper().str.strip()
-            df2.columns = df2.columns.str.upper().str.strip()
+            # Drop completely blank rows that Excel sometimes leaves at the bottom
+            df1.dropna(how="all", inplace=True)
+            df2.dropna(how="all", inplace=True)
+
+            df1.columns = df1.columns.astype(str).str.upper().str.strip()
+            df2.columns = df2.columns.astype(str).str.upper().str.strip()
+
+            df1 = df1.loc[:, ~df1.columns.duplicated()]
+            df2 = df2.loc[:, ~df2.columns.duplicated()]
+
+            if len(df1.columns) == 0 or len(df2.columns) == 0:
+                st.error(f"❌ **{base}:** One of the uploaded Excel sheets has no columns.", icon="🚨")
+                st.stop()
 
             KEY = "KEY" if "KEY" in df1.columns else df1.columns[0]
+
+            if KEY not in df2.columns:
+                st.error(
+                    f"❌ **Missing Key Column in Target for {base}:** Expected column `{KEY}`, "
+                    f"but Target only has: `{list(df2.columns)}`.",
+                    icon="🚨",
+                )
+                st.stop()
+
+            # Normalize KEY column BEFORE checking for duplicates
+            df1[KEY] = _clean_key_series(df1[KEY])
+            df2[KEY] = _clean_key_series(df2[KEY])
+
+            src_dup_mask = df1[KEY].duplicated(keep=False)
+            trg_dup_mask = df2[KEY].duplicated(keep=False)
 
             src_dups = df1[KEY].duplicated().sum()
             trg_dups = df2[KEY].duplicated().sum()
 
             if src_dups > 0 or trg_dups > 0:
+                src_dup_samples = df1.loc[src_dup_mask, KEY].unique()[:10].tolist()
+                trg_dup_samples = df2.loc[trg_dup_mask, KEY].unique()[:10].tolist()
                 st.error(
-                    f"⛔ **Comparison Aborted for {base}:** Duplicate keys discovered! "
-                    f"Source file contains `{src_dups}` duplicate keys. "
-                    f"Target file contains `{trg_dups}` duplicate keys. Please fix keys to proceed.",
-                    icon="🚨"
+                    f"⛔ **Comparison Aborted for {base}:** Duplicate keys discovered in column `{KEY}`!\n\n"
+                    f"- **Source duplicates:** `{src_dups}` (Sample keys: `{src_dup_samples}`)\n"
+                    f"- **Target duplicates:** `{trg_dups}` (Sample keys: `{trg_dup_samples}`)",
+                    icon="🚨",
                 )
                 st.stop()
 
@@ -88,8 +131,9 @@ def run():
 
             for df in [df1, df2]:
                 for col in common_cols:
-                    df[col] = df[col].fillna("NULL").astype(str).str.strip()
-                    df.loc[df[col] == "", col] = ""
+                    if col != KEY:
+                        df[col] = df[col].fillna("NULL").astype(str).str.strip()
+                        df.loc[df[col] == "", col] = ""
 
             src_keys = set(df1[KEY])
             trg_keys = set(df2[KEY])
@@ -125,7 +169,6 @@ def run():
                             "KEY Value": row[KEY],
                         })
 
-            # Build detailed report dataframe with single representative row per Column Name
             if detailed_diff_rows:
                 df_temp = pd.DataFrame(detailed_diff_rows)
                 counts = df_temp.groupby("Column Name").size().reset_index(name="Issue Count")
@@ -144,14 +187,13 @@ def run():
 
             output = BytesIO()
             with pd.ExcelWriter(output, engine="openpyxl") as writer:
-                # Sheet 1: Missing Columns
-                pd.DataFrame({"Missing in Target": src_only_cols}).to_excel(writer, sheet_name="Missing_Columns",
-                                                                            index=False, startrow=1)
-                pd.DataFrame({"Missing in Source": trg_only_cols}).to_excel(writer, sheet_name="Missing_Columns",
-                                                                            index=False,
-                                                                            startrow=len(src_only_cols) + 5)
+                pd.DataFrame({"Missing in Target": src_only_cols}).to_excel(
+                    writer, sheet_name="Missing_Columns", index=False, startrow=1
+                )
+                pd.DataFrame({"Missing in Source": trg_only_cols}).to_excel(
+                    writer, sheet_name="Missing_Columns", index=False, startrow=len(src_only_cols) + 5
+                )
 
-                # Sheet 2: Missing Records
                 wb = writer.book
                 ws_miss = wb.create_sheet(title="Missing_Records")
                 ws_miss.append(["Missing in Target"])
@@ -172,13 +214,8 @@ def run():
                 for row in df_miss_src.values.tolist():
                     ws_miss.append(row)
 
-                # Sheet 3: All Data
                 df_all.to_excel(writer, sheet_name="All_Data", index=False)
-
-                # Sheet 4: Differences Columns
                 df_diff_cols_report.to_excel(writer, sheet_name="Differences_Columns", index=False)
-
-                # Sheet 5: Filtered Differences
                 df_filtered.to_excel(writer, sheet_name="Filtered_Differences", index=False)
 
                 def _apply_arrow_highlights(ws, df):
@@ -194,7 +231,6 @@ def run():
                 if "Filtered_Differences" in wb.sheetnames:
                     _apply_arrow_highlights(wb["Filtered_Differences"], df_filtered)
 
-                # Highlight the "Issue" column cells in Differences_Columns sheet (Column B)
                 if "Differences_Columns" in wb.sheetnames and not df_diff_cols_report.empty:
                     ws_diff = wb["Differences_Columns"]
                     for r in range(2, ws_diff.max_row + 1):
@@ -232,8 +268,13 @@ def run():
 
         summary_rows = []
         for name, r in st.session_state["comparator_results"].items():
-            total_issues = (r["miss_src_cols"] + r["miss_trg_cols"] +
-                            r["miss_src_rows"] + r["miss_trg_rows"] + r["diff_rows"])
+            total_issues = (
+                r["miss_src_cols"]
+                + r["miss_trg_cols"]
+                + r["miss_src_rows"]
+                + r["miss_trg_rows"]
+                + r["diff_rows"]
+            )
             status = "✅ Match" if total_issues == 0 else "❌ Issues found"
 
             summary_rows.append({
@@ -257,7 +298,7 @@ def run():
                     f"⬇ {name}",
                     data=data_dict["data"],
                     file_name=f"{name}_Comparison.xlsx",
-                    key=f"dl_btn_{name}"
+                    key=f"dl_btn_{name}",
                 )
 
 
