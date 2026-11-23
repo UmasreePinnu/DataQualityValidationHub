@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 from io import BytesIO
 from openpyxl.styles import PatternFill, Font, Alignment
-from openpyxl.formatting.rule import CellIsRule
 from openpyxl.utils import get_column_letter
 from conn_picker import render_picker
 from db_utils import engine_from_profile
@@ -43,7 +42,7 @@ def _pct(src, tgt):
     return round(abs((src - tgt) / src) * 100, 4)
 
 
-def _compare_one_mapping(src_engine, trg_engine, src_t, tgt_t, dims, aggs):
+def _compare_one_mapping(src_engine, trg_engine, src_t, tgt_t, dims, aggs, src_cond, tgt_cond):
     sch_s, tab_s = src_t.split(".", 1)
     sch_t, tab_t = tgt_t.split(".", 1)
 
@@ -60,11 +59,25 @@ def _compare_one_mapping(src_engine, trg_engine, src_t, tgt_t, dims, aggs):
     agg_dfs = {}
 
     for agg in aggs:
-        src_sel = ", ".join(f"{agg}({c}) AS {agg}_{c}_SRC" for c in common_cols)
-        tgt_sel = ", ".join(f"{agg}({c}) AS {agg}_{c}_TGT" for c in common_cols)
+        # Prevent integer overflow on large sums and truncation on averages
+        if agg == "SUM":
+            src_sel = ", ".join(f"SUM(CAST({c} AS BIGINT)) AS {agg}_{c}_SRC" for c in common_cols)
+            tgt_sel = ", ".join(f"SUM(CAST({c} AS BIGINT)) AS {agg}_{c}_TGT" for c in common_cols)
+        elif agg == "AVG":
+            src_sel = ", ".join(f"AVG(CAST({c} AS FLOAT)) AS {agg}_{c}_SRC" for c in common_cols)
+            tgt_sel = ", ".join(f"AVG(CAST({c} AS FLOAT)) AS {agg}_{c}_TGT" for c in common_cols)
+        else:
+            src_sel = ", ".join(f"{agg}({c}) AS {agg}_{c}_SRC" for c in common_cols)
+            tgt_sel = ", ".join(f"{agg}({c}) AS {agg}_{c}_TGT" for c in common_cols)
 
-        df_src = pd.read_sql(f"SELECT {dim_select}{src_sel} FROM {src_t}{grp}", src_engine)
-        df_tgt = pd.read_sql(f"SELECT {dim_select}{tgt_sel} FROM {tgt_t}{grp}", trg_engine)
+        src_where = f" WHERE {src_cond}" if src_cond else ""
+        tgt_where = f" WHERE {tgt_cond}" if tgt_cond else ""
+
+        src_query = f"SELECT {dim_select}{src_sel} FROM {src_t}{src_where}{grp}"
+        tgt_query = f"SELECT {dim_select}{tgt_sel} FROM {tgt_t}{tgt_where}{grp}"
+
+        df_src = pd.read_sql(src_query, src_engine)
+        df_tgt = pd.read_sql(tgt_query, trg_engine)
 
         df_src.columns = [c.upper() for c in df_src.columns]
         df_tgt.columns = [c.upper() for c in df_tgt.columns]
@@ -164,26 +177,34 @@ def run():
 
     st.divider()
 
-    st.subheader("Table mappings")
-    st.caption("Optionally add dimension columns (pipe-separated) to group by.")
+    st.subheader("Table mappings & conditions")
+    st.caption("Configure table pairs, grouping dimensions, and optional SQL WHERE filters for history or status checks.")
 
     if "fact_mappings" not in st.session_state:
-        st.session_state["fact_mappings"] = [{"src": "", "tgt": "", "dims": ""}]
+        st.session_state["fact_mappings"] = [{"src": "", "tgt": "", "dims": "", "src_cond": "", "tgt_cond": ""}]
 
     for i, row in enumerate(st.session_state["fact_mappings"]):
-        ca, cb, cc, cd = st.columns([3, 3, 3, 0.5])
-        row["src"]  = ca.text_input("Source table",        value=row["src"],
-                                    key=f"fm_src_{i}", placeholder="ODS.FACT_SALES")
-        row["tgt"]  = cb.text_input("Target table",        value=row["tgt"],
-                                    key=f"fm_tgt_{i}", placeholder="DWH.FACT_SALES")
-        row["dims"] = cc.text_input("Dim columns (| sep)",  value=row["dims"],
-                                    key=f"fm_dim_{i}", placeholder="FISCAL_YEAR|REGION")
-        if cd.button("×", key=f"fm_del_{i}") and len(st.session_state["fact_mappings"]) > 1:
-            st.session_state["fact_mappings"].pop(i)
-            st.rerun()
+        with st.container(border=True):
+            ca, cb, cc, cd = st.columns([3, 3, 3, 0.5])
+            row["src"]  = ca.text_input("Source table",        value=row["src"],
+                                        key=f"fm_src_{i}", placeholder="ODS.FACT_SALES")
+            row["tgt"]  = cb.text_input("Target table",        value=row["tgt"],
+                                        key=f"fm_tgt_{i}", placeholder="DWH.FACT_SALES")
+            row["dims"] = cc.text_input("Dim columns (| sep)",  value=row["dims"],
+                                        key=f"fm_dim_{i}", placeholder="FISCAL_YEAR|REGION")
+            if cd.button("×", key=f"fm_del_{i}") and len(st.session_state["fact_mappings"]) > 1:
+                st.session_state["fact_mappings"].pop(i)
+                st.rerun()
+
+            with st.expander("⚙️ Optional WHERE Filtering Conditions (Live vs. History)", expanded=bool(row["src_cond"] or row["tgt_cond"])):
+                cx, cy = st.columns(2)
+                row["src_cond"] = cx.text_input("Source WHERE condition", value=row["src_cond"],
+                                                key=f"fm_scond_{i}", placeholder="e.g. Locked_flag = '1' AND reported = 'Reported'")
+                row["tgt_cond"] = cy.text_input("Target WHERE condition", value=row["tgt_cond"],
+                                                key=f"fm_tcond_{i}", placeholder="e.g. Locked_flag = '1' AND reported = 'Reported'")
 
     if st.button("＋ Add mapping"):
-        st.session_state["fact_mappings"].append({"src": "", "tgt": "", "dims": ""})
+        st.session_state["fact_mappings"].append({"src": "", "tgt": "", "dims": "", "src_cond": "", "tgt_cond": ""})
         st.rerun()
 
     threshold = st.number_input("Variance threshold (%)", min_value=0.0, value=1.0, step=0.1)
@@ -215,9 +236,12 @@ def run():
             tgt_t = row["tgt"].strip().upper()
             dims  = [d.strip().upper() for d in row["dims"].split("|") if d.strip()] \
                     if row["dims"].strip() else []
+            src_cond = row["src_cond"].strip()
+            tgt_cond = row["tgt_cond"].strip()
+
             try:
                 agg_dfs, tab_s, tab_t = _compare_one_mapping(
-                    src_engine, trg_engine, src_t, tgt_t, dims, selected_aggs
+                    src_engine, trg_engine, src_t, tgt_t, dims, selected_aggs, src_cond, tgt_cond
                 )
                 key = f"{tab_s}_vs_{tab_t}"
                 if key in all_results:
