@@ -23,18 +23,13 @@ def _build_excel_file(sheet_name, df):
     ws = wb.active
     ws.title = sheet_name[:31]
 
-    for col_idx, col_name in enumerate(df.columns, 1):
-        ws.cell(row=1, column=col_idx, value=col_name)
-
-    for row_idx, row_values in enumerate(df.values, 2):
-        for col_idx, value in enumerate(row_values, 1):
-            if pd.isna(value):
-                cell_value = "NULL"
-            elif str(value).strip() == "":
-                cell_value = None
-            else:
-                cell_value = _sanitize(value)
-            ws.cell(row=row_idx, column=col_idx, value=cell_value)
+    ws.append(list(df.columns))
+    for row_values in df.itertuples(index=False, name=None):
+        clean_row = [
+            "NULL" if pd.isna(v) else (None if str(v).strip() == "" else _sanitize(v))
+            for v in row_values
+        ]
+        ws.append(clean_row)
 
     buf = BytesIO()
     wb.save(buf)
@@ -67,14 +62,16 @@ def safe_execute_query(engine, query_str: str) -> pd.DataFrame:
         columns = [col[0] for col in cursor.description]
         rows = cursor.fetchall()
 
-        data = []
-        for row in rows:
-            clean_row = []
-            for val in row:
-                if isinstance(val, bytes):
-                    val = val.decode("latin1", errors="replace")
-                clean_row.append(val)
-            data.append(clean_row)
+        if not rows:
+            return pd.DataFrame(columns=columns)
+
+        data = [
+            [
+                val.decode("latin1", errors="replace") if isinstance(val, bytes) else val
+                for val in row
+            ]
+            for row in rows
+        ]
 
         return pd.DataFrame(data, columns=columns)
     finally:
@@ -169,19 +166,13 @@ def run():
 
                 for sheet_name, df in results:
                     ws = wb.create_sheet(title=sheet_name[:31])
-                    for col_idx, col_name in enumerate(df.columns, 1):
-                        ws.cell(row=1, column=col_idx, value=col_name)
-                    for row_idx, row_values in enumerate(df.values, 2):
-                        for col_idx, value in enumerate(row_values, 1):
-                            if pd.isna(value):
-                                cell_value = "NULL"
-                            elif str(value).strip() == "":
-                                cell_value = None
-                            else:
-                                cell_value = _sanitize(value)
-                            ws.cell(
-                                row=row_idx, column=col_idx, value=cell_value
-                            )
+                    ws.append(list(df.columns))
+                    for row_values in df.itertuples(index=False, name=None):
+                        clean_row = [
+                            "NULL" if pd.isna(v) else (None if str(v).strip() == "" else _sanitize(v))
+                            for v in row_values
+                        ]
+                        ws.append(clean_row)
 
                 buf = BytesIO()
                 wb.save(buf)
